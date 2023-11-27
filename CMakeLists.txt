@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 3.5...3.16)
 
-project(boost_context VERSION "${BOOST_SUPERPROJECT_VERSION}" LANGUAGES CXX)
+project(boost_context VERSION "${BOOST_SUPERPROJECT_VERSION}")
 
 list(APPEND CMAKE_MODULE_PATH ${boost_context_SOURCE_DIR}/cmake)
 
@@ -26,6 +26,9 @@ set_property(CACHE BOOST_CONTEXT_BINARY_FORMAT PROPERTY STRINGS elf mach-o pe xc
 unset(_default_binfmt)
 
 ## ABI
+if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "")
+  message(FATAL_ERROR "CMAKE_SIZEOF_VOID_P variable is empty. It's necessary to exist")
+endif()
 
 math(EXPR _bits "${CMAKE_SIZEOF_VOID_P}*8")
 
